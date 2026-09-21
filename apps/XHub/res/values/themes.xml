@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2026 Anshuman X (maxxcodebug). All rights reserved. -->
+<resources>
+    <style name="Theme.XHub" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="materialCardViewStyle">@style/XHubCard</item>
+        <item name="shapeAppearanceCornerLarge">@style/XHubLargeShape</item>
+    </style>
+
+    <style name="XHubLargeShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
+    </style>
+
+    <style name="XHubCard" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">28dp</item>
+        <item name="contentPadding">20dp</item>
+    </style>
+</resources>

@@ -1,0 +1,20 @@
+// Copyright (c) 2026 Anshuman X (maxxcodebug). All rights reserved.
+android_app {
+    name: "XHub",
+    manifest: "AndroidManifest.xml",
+    srcs: ["src/**/*.kt"],
+    resource_dirs: ["res"],
+    asset_dirs: ["assets"],
+    static_libs: [
+        "androidx.appcompat_appcompat",
+        "com.google.android.material_material",
+        "kotlin-stdlib",
+    ],
+    platform_apis: true,
+    certificate: "platform",
+    system_ext_specific: true,
+    privileged: true,
+    optimize: {
+        enabled: false,
+    },
+}

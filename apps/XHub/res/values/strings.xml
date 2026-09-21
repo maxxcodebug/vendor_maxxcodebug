@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2026 Anshuman X (maxxcodebug). All rights reserved. -->
+<resources>
+    <string name="app_name">X Hub</string>
+    <string name="header_title">Anshuman X</string>
+    <string name="section_about">About me</string>
+    <string name="section_build">This build</string>
+    <string name="section_changelog">Changelog</string>
+    <string name="section_links">Find me</string>
+    <string name="status_official">Official</string>
+    <string name="status_unofficial">Unofficial</string>
+    <string name="status_personal">Personal</string>
+    <string name="msg_official">Official build. Fully supported, with regular updates.</string>
+    <string name="msg_unofficial">Unofficial build. Use at your own risk and report bugs on Telegram or GitHub.</string>
+    <string name="msg_personal">Personal build made for %1$s. Not for public distribution.</string>
+    <string name="msg_personal_noname">Personal build. Not for public distribution.</string>
+    <string name="next_update">Next update: %1$s</string>
+    <string name="btn_github">GitHub</string>
+    <string name="btn_discord">Discord</string>
+    <string name="btn_telegram">Telegram</string>
+    <string name="btn_donate">Support me</string>
+    <string name="no_link">Link not set yet</string>
+    <string name="soon">will be updated soon</string>
+    <string name="soon_about">Details will be updated soon.</string>
+    <string name="soon_changelog">Changelog will be updated soon.</string>
+    <string name="copyright">© 2026 Anshuman X (maxxcodebug). All rights reserved.</string>
+</resources>

@@ -1,0 +1,17 @@
+{
+  "about": "Hi, I'm Anshuman X. I build and maintain custom ROMs. Thanks for using my builds!",
+  "links": [
+    { "label": "Telegram (me)",      "url": "https://t.me/AnshumanAhirwar" },
+    { "label": "Tetris support chat", "url": "https://t.me/suppportgrop" },
+    { "label": "Updates and topics channel", "url": "https://t.me/otbyramen" },
+    { "label": "GitHub",             "url": "https://github.com/maxxcodebug" },
+    { "label": "ROM source",         "url": "https://github.com/maxxcodebug/CHANGE_ME" },
+    { "label": "App source",         "url": "https://github.com/maxxcodebug/CHANGE_ME" },
+    { "label": "Discord",            "url": "https://discord.gg/CHANGE_ME" },
+    { "label": "Support me",         "url": "https://CHANGE_ME", "primary": true }
+  ],
+  "next_update_eta": "TBA",
+  "changelog": [
+    { "version": "1.0", "date": "2026-09-21", "changes": ["Initial release"] }
+  ]
+}
