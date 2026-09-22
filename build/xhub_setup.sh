@@ -1,9 +1,10 @@
-# Copyright (c) 2026 Anshuman X (maxxcodebug). All rights reserved.
 # X Hub build-info setup. Runs when you do: . build/envsetup.sh
 #  - Enter        = keep the suggested/previous value (or skip if empty)
 #  - -            = clear the field (skip it)
 #  - s at start   = skip ALL questions and reuse saved answers
-# Skipped fields show "will be updated soon" in the app (links are hidden).
+# Skipped fields show "will be updated soon" in the app (empty links are hidden).
+# The app also reads the ROM's README, the ROM's Telegram/Discord links and your
+# releases or commits by itself, so most fields are only a fallback.
 # Re-run any time with:  xhub_setup
 
 _XHUB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -23,13 +24,15 @@ _xhub_ask() { # var label
 }
 
 xhub_setup() {
-    # ---- defaults you already told me ----
+    # ---- defaults ----
     XH_MAINTAINER="Anshuman X"
     XH_TELEGRAM="https://t.me/AnshumanAhirwar"
     XH_SUPPORT="https://t.me/suppportgrop"
+    XH_SUPPORT_LABEL="CMF Phone 1 support chat"
     XH_CHANNEL="https://t.me/otbyramen"
     XH_GITHUB="https://github.com/maxxcodebug"
-    XH_ROM_NAME= XH_ABOUT= XH_ROM_GH= XH_APP_GH= XH_DISCORD= XH_DONATE=
+    XH_ABOUT= XH_APP_GH= XH_DISCORD= XH_DONATE=
+    XH_ROM_NAME= XH_ROM_GH= XH_ROM_CHANNEL= XH_ROM_GROUP= XH_ROM_SITE= XH_CL_REPO=
     XH_ETA= XH_CHANGELOG= XH_TYPE=UNOFFICIAL XH_FOR=
 
     # ---- previous answers ----
@@ -51,8 +54,8 @@ xhub_setup() {
     echo "== X Hub build info =="
     read -r -p "Press Enter to review, or 's' to skip all: " _go
     if [ "$_go" != "s" ] && [ "$_go" != "S" ]; then
+        echo "-- This build --"
         _xhub_ask XH_MAINTAINER "Maintainer name"
-        _xhub_ask XH_ROM_NAME   "ROM name"
         _xhub_ask XH_TYPE       "Build type (OFFICIAL / UNOFFICIAL / PERSONAL)"
         XH_TYPE="$(echo "${XH_TYPE:-UNOFFICIAL}" | tr '[:lower:]' '[:upper:]')"
         case "$XH_TYPE" in OFFICIAL|UNOFFICIAL|PERSONAL) ;; *) XH_TYPE=UNOFFICIAL ;; esac
@@ -62,15 +65,23 @@ xhub_setup() {
             XH_FOR=""
         fi
         _xhub_ask XH_ETA        "Next update ETA (e.g. 5 Oct 2026)"
-        _xhub_ask XH_CHANGELOG  "Changelog for this build (comma separated)"
+        _xhub_ask XH_CHANGELOG  "Changelog for this build (comma separated, or leave for auto)"
+        _xhub_ask XH_CL_REPO    "GitHub repo for auto changelog and update check (owner/repo)"
         _xhub_ask XH_ABOUT      "About you (one line)"
-        _xhub_ask XH_TELEGRAM   "Telegram link"
-        _xhub_ask XH_SUPPORT    "Support group link"
-        _xhub_ask XH_CHANNEL    "Channel link"
-        _xhub_ask XH_GITHUB     "GitHub profile"
-        _xhub_ask XH_ROM_GH     "ROM GitHub repo"
+        echo "-- The ROM (its README is read automatically) --"
+        _xhub_ask XH_ROM_NAME    "ROM name"
+        _xhub_ask XH_ROM_GH      "ROM GitHub repo (URL or owner/repo)"
+        _xhub_ask XH_ROM_CHANNEL "ROM Telegram channel"
+        _xhub_ask XH_ROM_GROUP   "ROM discussion group"
+        _xhub_ask XH_ROM_SITE    "ROM website"
+        echo "-- Your links --"
+        _xhub_ask XH_TELEGRAM   "Your Telegram"
+        _xhub_ask XH_SUPPORT    "Device support group link"
+        _xhub_ask XH_SUPPORT_LABEL "Device support group label"
+        _xhub_ask XH_CHANNEL    "Your channel"
+        _xhub_ask XH_GITHUB     "Your GitHub profile"
         _xhub_ask XH_APP_GH     "App GitHub repo"
-        _xhub_ask XH_DISCORD    "Discord link"
+        _xhub_ask XH_DISCORD    "Your Discord"
         _xhub_ask XH_DONATE     "Donation link"
     fi
     _xhub_apply
@@ -81,8 +92,9 @@ _xhub_apply() {
     mkdir -p "$(dirname "$_XHUB_SAVED")"
     : > "$_XHUB_SAVED"
     local v
-    for v in XH_MAINTAINER XH_ROM_NAME XH_TYPE XH_FOR XH_ETA XH_CHANGELOG XH_ABOUT \
-             XH_TELEGRAM XH_SUPPORT XH_CHANNEL XH_GITHUB XH_ROM_GH XH_APP_GH XH_DISCORD XH_DONATE; do
+    for v in XH_MAINTAINER XH_TYPE XH_FOR XH_ETA XH_CHANGELOG XH_CL_REPO XH_ABOUT \
+             XH_ROM_NAME XH_ROM_GH XH_ROM_CHANNEL XH_ROM_GROUP XH_ROM_SITE \
+             XH_TELEGRAM XH_SUPPORT XH_SUPPORT_LABEL XH_CHANNEL XH_GITHUB XH_APP_GH XH_DISCORD XH_DONATE; do
         printf '%s=%q\n' "$v" "${!v}" >> "$_XHUB_SAVED"
     done
 
@@ -91,31 +103,40 @@ _xhub_apply() {
     export ANSHUMANX_BUILD_FOR="$XH_FOR"
 
     # generate the JSON bundled inside the app
-    export XH_MAINTAINER XH_ROM_NAME XH_ETA XH_CHANGELOG XH_ABOUT XH_TELEGRAM XH_SUPPORT \
-           XH_CHANNEL XH_GITHUB XH_ROM_GH XH_APP_GH XH_DISCORD XH_DONATE
+    export XH_MAINTAINER XH_ETA XH_CHANGELOG XH_CL_REPO XH_ABOUT \
+           XH_ROM_NAME XH_ROM_GH XH_ROM_CHANNEL XH_ROM_GROUP XH_ROM_SITE \
+           XH_TELEGRAM XH_SUPPORT XH_SUPPORT_LABEL XH_CHANNEL XH_GITHUB XH_APP_GH XH_DISCORD XH_DONATE
     python3 - "$_XHUB_ASSET" <<'PY'
 import json, os, sys, datetime
-e = os.environ.get
+e = lambda k: os.environ.get(k, "")
+
 links = []
-for label, key in [("Telegram (me)", "XH_TELEGRAM"),
-                   ("Support chat", "XH_SUPPORT"),
+for label, key in [("Telegram", "XH_TELEGRAM"),
+                   (e("XH_SUPPORT_LABEL") or "Support chat", "XH_SUPPORT"),
                    ("Channel", "XH_CHANNEL"),
                    ("GitHub", "XH_GITHUB"),
-                   ("ROM source", "XH_ROM_GH"),
                    ("App source", "XH_APP_GH"),
-                   ("Discord", "XH_DISCORD")]:
+                   ("Discord", "XH_DISCORD"),
+                   ("Support me", "XH_DONATE")]:
     if e(key):
         links.append({"label": label, "url": e(key)})
-if e("XH_DONATE"):
-    links.append({"label": "Support me", "url": e("XH_DONATE"), "primary": True})
 
-data = {"maintainer": e("XH_MAINTAINER", ""),
-        "rom_name": e("XH_ROM_NAME", ""),
-        "about": e("XH_ABOUT", ""),
-        "next_update_eta": e("XH_ETA", ""),
-        "links": links,
-        "changelog": []}
-changes = [c.strip() for c in e("XH_CHANGELOG", "").split(",") if c.strip()]
+data = {
+    "maintainer": e("XH_MAINTAINER"),
+    "about": e("XH_ABOUT"),
+    "next_update_eta": e("XH_ETA"),
+    "links": links,
+    "rom": {
+        "name": e("XH_ROM_NAME"),
+        "github": e("XH_ROM_GH"),
+        "channel": e("XH_ROM_CHANNEL"),
+        "group": e("XH_ROM_GROUP"),
+        "website": e("XH_ROM_SITE"),
+    },
+    "changelog_repo": e("XH_CL_REPO"),
+    "changelog": [],
+}
+changes = [c.strip() for c in e("XH_CHANGELOG").split(",") if c.strip()]
 if changes:
     data["changelog"].append({"version": "This build",
                               "date": datetime.date.today().isoformat(),

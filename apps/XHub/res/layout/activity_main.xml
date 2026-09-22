@@ -1,43 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2026 Anshuman X (maxxcodebug). All rights reserved. -->
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing"
-            style="?attr/collapsingToolbarLayoutLargeStyle"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
-            app:title="@string/header_title">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:clipToPadding="false"
+        android:paddingBottom="112dp">
 
         <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Status -->
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/header_title"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnInfo"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_circle_tonal"
+                    android:contentDescription="@string/cd_info"
+                    android:src="@drawable/ic_info" />
+                <ImageButton
+                    android:id="@+id/btnRefresh"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:background="@drawable/bg_circle_tonal"
+                    android:contentDescription="@string/cd_refresh"
+                    android:src="@drawable/ic_refresh" />
+            </LinearLayout>
+
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/heroCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:contentPadding="0dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.maxxcodebug.info.OrbView
+                        android:id="@+id/orb"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="22dp"
+                        android:paddingBottom="20dp">
+                        <TextView
+                            android:id="@+id/heroTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/heroSub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/updateChip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:background="@drawable/bg_pill_tonal"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="8dp"
+                            android:textColor="?attr/colorOnSecondaryContainer"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
+                        <TextView
+                            android:id="@+id/syncText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/whoCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/bg_circle_tonal"
+                        android:importantForAccessibility="no"
+                        android:padding="14dp"
+                        android:src="@drawable/ic_person" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/whoLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/whoValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurface"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/whoSub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/romCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp">
@@ -46,53 +178,38 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/badge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="6dp"
-                        android:textColor="#FFFFFF"
-                        android:textAppearance="?attr/textAppearanceLabelLarge" />
+                        android:text="@string/section_about_rom"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
                     <TextView
-                        android:id="@+id/statusMessage"
+                        android:id="@+id/romName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/romAbout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:textAppearance="?attr/textAppearanceBodyLarge" />
-                    <TextView
-                        android:id="@+id/etaText"
+                        android:layout_marginTop="6dp"
+                        android:lineSpacingMultiplier="1.15"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="14sp" />
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/romLinks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="?attr/textAppearanceTitleMedium" />
+                        android:layout_marginTop="12dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- About -->
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/section_about"
-                        android:textAppearance="?attr/textAppearanceTitleLarge" />
-                    <TextView
-                        android:id="@+id/aboutText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Build info -->
-            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/buildCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp">
@@ -104,19 +221,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/section_build"
-                        android:textAppearance="?attr/textAppearanceTitleLarge" />
-                    <TextView
-                        android:id="@+id/buildText"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+                    <GridLayout
+                        android:id="@+id/tiles"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:lineSpacingMultiplier="1.2"
-                        android:textAppearance="?attr/textAppearanceBodyMedium" />
+                        android:layout_marginTop="12dp"
+                        android:columnCount="2" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Changelog -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/changelogCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp">
@@ -128,22 +246,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/section_changelog"
-                        android:textAppearance="?attr/textAppearanceTitleLarge" />
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/changelogText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:lineSpacingMultiplier="1.2"
-                        android:textAppearance="?attr/textAppearanceBodyMedium" />
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Links -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/meCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="12dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -151,24 +272,89 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:text="@string/section_links"
-                        android:textAppearance="?attr/textAppearanceTitleLarge" />
-                    <LinearLayout
-                        android:id="@+id/linksContainer"
+                        android:text="@string/section_about_me"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/aboutText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-                    </LinearLayout>
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingMultiplier="1.15"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/linksCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/section_links"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/links"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <TextView
-                android:id="@+id/footerCopyright"
+                android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingBottom="16dp"
                 android:text="@string/copyright"
-                android:textAppearance="?attr/textAppearanceBodySmall" />
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:textSize="11sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.maxxcodebug.info.LiquidGlassView
+        android:id="@+id/nav"
+        android:layout_width="wrap_content"
+        android:layout_height="68dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:paddingHorizontal="10dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/navHome"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/nav_home"
+                android:src="@drawable/ic_home" />
+            <ImageButton
+                android:id="@+id/navChangelog"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/nav_changelog"
+                android:src="@drawable/ic_list" />
+            <ImageButton
+                android:id="@+id/navLinks"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/nav_links"
+                android:src="@drawable/ic_open" />
+        </LinearLayout>
+    </com.maxxcodebug.info.LiquidGlassView>
+</FrameLayout>

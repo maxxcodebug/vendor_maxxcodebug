@@ -1,17 +1,20 @@
 {
-  "about": "Hi, I'm Anshuman X. I build and maintain custom ROMs. Thanks for using my builds!",
+  "maintainer": "Anshuman X",
+  "about": "",
+  "next_update_eta": "",
   "links": [
-    { "label": "Telegram (me)",      "url": "https://t.me/AnshumanAhirwar" },
-    { "label": "Tetris support chat", "url": "https://t.me/suppportgrop" },
-    { "label": "Updates and topics channel", "url": "https://t.me/otbyramen" },
-    { "label": "GitHub",             "url": "https://github.com/maxxcodebug" },
-    { "label": "ROM source",         "url": "https://github.com/maxxcodebug/CHANGE_ME" },
-    { "label": "App source",         "url": "https://github.com/maxxcodebug/CHANGE_ME" },
-    { "label": "Discord",            "url": "https://discord.gg/CHANGE_ME" },
-    { "label": "Support me",         "url": "https://CHANGE_ME", "primary": true }
+    { "label": "Telegram", "url": "https://t.me/AnshumanAhirwar" },
+    { "label": "CMF Phone 1 support chat", "url": "https://t.me/suppportgrop" },
+    { "label": "Channel", "url": "https://t.me/otbyramen" },
+    { "label": "GitHub", "url": "https://github.com/maxxcodebug" }
   ],
-  "next_update_eta": "TBA",
-  "changelog": [
-    { "version": "1.0", "date": "2026-09-21", "changes": ["Initial release"] }
-  ]
+  "rom": {
+    "name": "",
+    "github": "",
+    "channel": "",
+    "group": "",
+    "website": ""
+  },
+  "changelog_repo": "",
+  "changelog": []
 }

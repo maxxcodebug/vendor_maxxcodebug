@@ -1,16 +1,33 @@
 # X Hub
 
-A system app for custom ROMs that tells users about the maintainer, the build
-and where to get support. It is compiled from source together with the ROM.
+A system app for custom ROMs that tells users about the maintainer, the ROM, the
+build and where to get support. It is compiled from source together with the ROM,
+and most of what it shows is found automatically.
 
 ## Features
-- About the maintainer, ROM name, device, Android version and build date
-- Build status badge that is picked up automatically: **Official**, **Unofficial** or **Personal**
-- Personal builds show who the build was made for
-- Changelog and next update ETA
-- Links: Telegram, support chat, channel, GitHub, ROM source, app source, Discord, donation
-- Material 3 design with dynamic colors and a bold collapsing header
-- Fields left empty show "will be updated soon" (empty links are hidden)
+- Dolby-style Material 3 home screen with a living liquid orb that follows the build type
+- Build status picked up automatically: **Official**, **Unofficial** or **Personal**
+  (personal builds show the same full set of info, plus who the build is for)
+- **About the ROM** read from the ROM's own README, with its Telegram channel,
+  discussion group, GitHub and website
+- Device, Android version, security patch, build date and build ID read from the system
+- Changelog and "update available" chip taken from your GitHub releases or commits
+- Next update ETA, links and about text you can change on GitHub without rebuilding the ROM
+- Spring animations everywhere: cards, buttons, orb and the floating navigation
+- Liquid glass floating navigation (blur and lens refraction on Android 13+, frosted glass on older versions)
+- Fields left empty show "will be updated soon" and empty links are hidden
+
+## What is automatic
+| Info | Where it comes from |
+| --- | --- |
+| ROM about text | First paragraph of the ROM README (GitHub API) |
+| ROM Telegram / Discord | Links in the ROM README, or the ones you give at setup |
+| Device, Android, patch, build ID | Android system |
+| Build type and "built for" | Set at `envsetup` and baked into the ROM |
+| Changelog and update check | Latest release, or recent commits, of your changelog repo |
+| Everything else | `apps/XHub/assets/info.json`, refreshed from this repo |
+
+Data is cached for 6 hours, so the app works offline and stays within GitHub's rate limit.
 
 ## Repository layout
 ```
@@ -29,7 +46,7 @@ maxxcodebug.mk        adds the app and the build-type properties to the ROM
    ```
    $(call inherit-product, vendor/maxxcodebug/maxxcodebug.mk)
    ```
-3. Set up the environment. You will be asked for the build info.
+3. Set up the environment. You will be asked for the build info and the ROM links.
    Press Enter to keep a value, `-` to clear it, or `s` to skip everything:
    ```
    . build/envsetup.sh
@@ -39,6 +56,10 @@ maxxcodebug.mk        adds the app and the build-type properties to the ROM
    . vendor/maxxcodebug/build/xhub_setup.sh && xhub_setup
    ```
 4. Build the ROM as usual. The `XHub` package is added automatically.
+
+## Works with any ROM
+Nothing is tied to one ROM. At setup you give the ROM's GitHub repo and, if you like,
+its channel, group and website. Everything else is read from the README.
 
 ## Build type
 Set by the setup script, or manually before building:
@@ -55,10 +76,10 @@ one line to the `links` list:
 { "label": "Instagram", "url": "https://instagram.com/..." }
 ```
 
-## Design
-Material 3 with dynamic colors. If your tree ships Material Components 1.14 or
-newer, change the theme parent in `res/values/themes.xml` to
-`Theme.Material3Expressive.DayNight.NoActionBar` for the Expressive look.
+## Requirements
+- Android 13 or newer for the glass refraction shader (older versions still work, without refraction)
+- `androidx.dynamicanimation` and Material Components in your tree's prebuilts.
+  If your tree names the library differently, adjust `static_libs` in `apps/XHub/Android.bp`.
 
 ## SELinux note
 If the app always shows "Unofficial", add this line to your sepolicy `property_contexts`:
@@ -68,6 +89,3 @@ ro.anshumanx. u:object_r:system_prop:s0
 
 ## Maintainer
 Anshuman X - [GitHub](https://github.com/maxxcodebug) - [Telegram](https://t.me/AnshumanAhirwar) - [Channel](https://t.me/otbyramen) - [Support chat](https://t.me/suppportgrop)
-
----
-Copyright © 2026 Anshuman X (maxxcodebug). All rights reserved.

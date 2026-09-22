@@ -1,4 +1,3 @@
-# Copyright (c) 2026 Anshuman X (maxxcodebug). All rights reserved.
 # vendor/maxxcodebug/maxxcodebug.mk
 # Include from your device/vendor makefile:
 #   $(call inherit-product, vendor/maxxcodebug/maxxcodebug.mk)

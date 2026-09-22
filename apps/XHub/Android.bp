@@ -1,4 +1,3 @@
-// Copyright (c) 2026 Anshuman X (maxxcodebug). All rights reserved.
 android_app {
     name: "XHub",
     manifest: "AndroidManifest.xml",
@@ -7,6 +6,7 @@ android_app {
     asset_dirs: ["assets"],
     static_libs: [
         "androidx.appcompat_appcompat",
+        "androidx.dynamicanimation_dynamicanimation",
         "com.google.android.material_material",
         "kotlin-stdlib",
     ],
